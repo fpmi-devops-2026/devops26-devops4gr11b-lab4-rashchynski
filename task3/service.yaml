@@ -1,0 +1,18 @@
+# Задание 3. Service — стабильная точка доступа к подам Deployment.
+# Тип NodePort публикует сервис на каждой ноде на порту 30000;
+# этот порт проброшен на хост-машину при создании кластера kind.
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: lab4
+  labels:
+    app: web
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000

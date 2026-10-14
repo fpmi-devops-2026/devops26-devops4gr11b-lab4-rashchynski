@@ -1,0 +1,19 @@
+# Задание 3. ConfigMap — неконфиденциальные данные конфигурации.
+# APP_MODE передаётся в под как переменная окружения,
+# index.html монтируется в под как файл (его отдаёт nginx).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: lab4
+data:
+  APP_MODE: "production"
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head><meta charset="utf-8"><title>Lab4</title></head>
+      <body>
+        <h1>Lab4: nginx</h1>
+        <p>Страница отдаётся из ConfigMap, смонтированного в pod.</p>
+      </body>
+    </html>
