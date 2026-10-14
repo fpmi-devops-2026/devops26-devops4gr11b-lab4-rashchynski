@@ -1,0 +1,21 @@
+# Задание 3. Ingress — HTTP-маршрутизация снаружи в сервис кластера.
+# Решает проблему: один внешний адрес/порт обслуживает много сервисов
+# по правилам host/path. Требует установленного ingress-контроллера (nginx).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+  namespace: lab4
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: lab4.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80
