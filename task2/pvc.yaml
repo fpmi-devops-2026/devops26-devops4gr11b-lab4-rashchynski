@@ -1,0 +1,15 @@
+# Задание 2. PersistentVolumeClaim: запрос на дисковое хранилище.
+# StorageClass 'standard' (provisioner rancher.io/local-path) динамически
+# создаст PersistentVolume при первом использовании томом подом.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: demo-pvc
+  namespace: lab4
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 1Gi

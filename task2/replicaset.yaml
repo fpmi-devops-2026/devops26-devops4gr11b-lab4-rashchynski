@@ -1,0 +1,25 @@
+# Задание 2. ReplicaSet — коллекция подов, поддерживающая заданное число реплик.
+# ReplicaSet следит за тем, чтобы всегда было запущено ровно `replicas` подов,
+# и автоматически пересоздаёт их при удалении или падении.
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web
+  namespace: lab4
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27
+          ports:
+            - containerPort: 80

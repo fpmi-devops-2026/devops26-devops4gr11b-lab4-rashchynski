@@ -1,0 +1,27 @@
+# Задание 2. Демонстрация тома: один emptyDir смонтирован в два контейнера.
+# Контейнер writer пишет данные в том, контейнер reader читает их оттуда —
+# это доказывает, что оба контейнера видят один и тот же том.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-demo
+  namespace: lab4
+  labels:
+    app: volume-demo
+spec:
+  volumes:
+    - name: shared-data
+      emptyDir: {}          # временный том, живёт, пока существует pod
+  containers:
+    - name: writer
+      image: busybox:1.36
+      command: ["/bin/sh", "-c", "while true; do date >> /data/log.txt; sleep 5; done"]
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+    - name: reader
+      image: busybox:1.36
+      command: ["/bin/sh", "-c", "tail -f /data/log.txt"]
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
